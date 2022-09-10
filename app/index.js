@@ -1,3 +1,4 @@
+const os = require("os");
 const express = require('express')
 const axios = require('axios');
 const { response } = require('express');
@@ -35,6 +36,19 @@ app.get('/dogs', async(req, res)=> {
         );
     } catch (error) {
         console.log.error(JSON.stringify(response.data));
+        res.status(500);
+        res.send(error.message);
+    }
+
+});
+
+app.get('/host', async(req, res)=> {
+    try {
+        var hostname = os.hostname();
+        res.send(
+            `<h3>This is running from "${hostname}"</h3>`
+        );
+    } catch (error) {
         res.status(500);
         res.send(error.message);
     }
